@@ -12,8 +12,6 @@
 
 namespace Ejsmont\CircuitBreaker\Storage\Decorator;
 
-use Ejsmont\CircuitBreaker\Storage\StorageInterface;
-
 /**
  * This file is part of the php-circuit-breaker package.
  * 
@@ -27,7 +25,6 @@ use Ejsmont\CircuitBreaker\Storage\StorageInterface;
 namespace Ejsmont\CircuitBreaker\Storage\Decorator;
 
 use Ejsmont\CircuitBreaker\Storage\StorageInterface;
-use Ejsmont\CircuitBreaker\Storage\StorageException;
 
 /**
  * Service status data can be aggregated into one array.
@@ -47,7 +44,7 @@ class ArrayDecorator implements StorageInterface {
     protected $instance;
 
     /**
-     * @var array Array of agregated service stats loaded from storage handler
+     * @var array Array of aggregated service stats loaded from storage handler
      */
     protected $stats = false;
 
@@ -83,7 +80,7 @@ class ArrayDecorator implements StorageInterface {
      * @param 	string  $attributeName name of attribute to load
      * @return 	string  value stored or '' if value was not found
      *  
-     * @throws Ejsmont\CircuitBreaker\Storage\StorageException if storage error occurs, handler can not be used
+     * @throws \Ejsmont\CircuitBreaker\Storage\StorageException if storage error occurs, handler can not be used
      */
     public function loadStatus($serviceName, $attributeName) {
         // make sure we have the values loaded (request time cache of all service stats)
@@ -107,7 +104,7 @@ class ArrayDecorator implements StorageInterface {
      * @param   boolean $flush         set to true will force immediate save, false does not guaranteed saving at all.
      * @return 	void
      * 
-     * @throws Ejsmont\CircuitBreaker\Storage\StorageException if storage error occurs, handler can not be used
+     * @throws \Ejsmont\CircuitBreaker\Storage\StorageException if storage error occurs, handler can not be used
      */
     public function saveStatus($serviceName, $attributeName, $value, $flush = false) {
         // before writing we load the data no matter what
