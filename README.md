@@ -9,7 +9,7 @@ implementations for APC and Memcached but can be extended multiple ways.
 
 # Frameworks support
 
-This library does not require any particular PHP framework, all you need is PHP 5.3 or higher.
+This library does not require any particular PHP framework, all you need is PHP 5.4 or higher.
 
 ## Symfony 2
 
