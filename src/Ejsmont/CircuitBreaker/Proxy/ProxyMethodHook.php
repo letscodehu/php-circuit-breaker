@@ -30,6 +30,7 @@ class ProxyMethodHook implements MethodHook {
     function __construct(\ReflectionClass $classToWrap, CircuitBreakerInterface $circuitBreaker, $timeout = 3000)
     {
         $this->classToWrap = $classToWrap;
+        $this->timeout = $timeout;
         $this->serviceName = $classToWrap->getName();
         $this->circuitBreaker = $circuitBreaker;
     }
