@@ -8,11 +8,19 @@ use Predis\Client;
 
 require dirname(__FILE__) . '/../../../vendor/autoload.php';
 
-class SomeSlowService {
+class ParentClass {
+
+    public function __construct($something = null, $test = NULL) {
+        $this->something = $something;
+    }
+
+}
+
+class SomeSlowService extends ParentClass {
 
     private $something;
 
-    public function __construct($something) {
+    public function __construct($something = null) {
         $this->something = $something;
     }
 
