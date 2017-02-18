@@ -44,8 +44,8 @@ class ProxyMethodHook implements MethodHook {
      */
     public function supports(ReflectionMethod $method)
     {
-        // ignores the constructor
-        return $method->getName() != "__construct";
+        // ignores the magic functions
+        return !in_array($method->getName(), array("__construct", "__destruct","__isset", "__invoke","__clone","__debugInfo", "__unset", "__sleep","__toString", "__wakeup" , "__call", "__get", "__set", "__callStatic"));
     }
 
     /**
@@ -71,7 +71,6 @@ class ProxyMethodHook implements MethodHook {
 
         }
         ini_set("default_socket_timeout", $oldTimeout);
-        // after original method
 
         return $returnValue;
     }

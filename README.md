@@ -125,6 +125,34 @@ $proxy->remoteCalls(); // the call is protected by the circuit breaker
 
 </pre>
 
+the default wrapping functionality is as follows:
+
+<pre>
+        $oldTimeout = ini_get("default_socket_timeout"); // as we are talking about remote calls, we get the old timeout
+
+        if ($this->circuitBreaker->isAvailable($this->serviceName)) { // we are checking if the service is available
+            try {
+                ini_set("default_socket_timeout", $this->timeout); // override the timeout
+                $returnValue = $method->invokeArgs($proxy, $args); // the original methodcall
+                $this->circuitBreaker->reportSuccess($this->serviceName); // at the happy path we report the success
+            } catch(\Exception $e) {
+                $this->circuitBreaker->reportFailure($this->serviceName); // or we report the error
+            }
+
+        }
+        ini_set("default_socket_timeout", $oldTimeout); // and set the timeout to the original value
+</pre>
+
+You may override this by providing a 4th parameter to the create factory method:
+
+<pre>
+
+$proxy = CircuitBreakerProxyFactory::create('SomeSlowService', $circuitBreaker, ["constructor", "arguments"], $ownMethodHook);
+
+</pre>
+
+The 4th parameter must implement the 'guymers\proxy\MethodHook' interface.
+
 # Features
 
 * Track multiple services through a single Circuit Breaker instance.

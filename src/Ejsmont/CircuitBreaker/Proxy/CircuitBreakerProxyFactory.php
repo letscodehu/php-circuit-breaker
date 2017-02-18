@@ -9,6 +9,7 @@
 namespace Ejsmont\CircuitBreaker\Proxy;
 
 use Ejsmont\CircuitBreaker\CircuitBreakerInterface;
+use guymers\proxy\MethodHook;
 use guymers\proxy\ProxyFactory;
 
 class CircuitBreakerProxyFactory {
@@ -19,15 +20,19 @@ class CircuitBreakerProxyFactory {
      * @param $className string class to wrap in proxy
      * @param $circuitBreaker CircuitBreakerInterface
      * @param $constructorArgs array for the proxy constructor
-     * @return dynamic proxy
+     * @param $methodHook MethodHook to override the default
+     * @return mixed proxy
      *
      */
-    public static function create($className, CircuitBreakerInterface $circuitBreaker, $constructorArgs = array()) {
+    public static function create($className, CircuitBreakerInterface $circuitBreaker, $constructorArgs = array(), $methodHook = null) {
 
         $class = new \ReflectionClass($className);
+        if ($methodHook == null) {
+            $methodHook = new ProxyMethodHook($class, $circuitBreaker);
+        }
 
         $methodOverrides = [
-            new ProxyMethodHook($class, $circuitBreaker)
+            $methodHook
         ];
 
         return ProxyFactory::create($class, $methodOverrides, $constructorArgs);
