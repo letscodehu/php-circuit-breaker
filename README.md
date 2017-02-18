@@ -178,3 +178,4 @@ Some implementation details has changed but the core logic is still the same.
 ## Author
 
 * Artur Esjmont (https://github.com/ejsmont-artur) via http://artur.ejsmont.org
+* Krisztian Papp (https://github.com/letscodehu) via https://www.letscode.hu
