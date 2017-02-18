@@ -53,7 +53,7 @@ class RedisAdapterTest extends \PHPUnit_Framework_TestCase {
 
         $this->mockRedis->expects($this->once())
             ->method("expireAt")
-            ->with("EjsmontCircuitBreakerServiceTest", 3600);
+            ->with("EjsmontCircuitBreakerServiceTest", time() + 3600);
         // WHEN
         $this->underTest->saveStatus("Service","Test", "Value");
         // THEN
