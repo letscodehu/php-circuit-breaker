@@ -33,7 +33,7 @@
         <mkdir dir="${basedir}/build/dist" />
     </target>
     
-    <target name="quick" depends="clean,init"/>
+    <target name="quick" depends="clean,init,setup"/>
 
     <!-- ========================================== COMPOSER ====================================================== -->
 
