@@ -21,7 +21,7 @@ class RedisAdapterTest extends \PHPUnit_Framework_TestCase {
     private $mockRedis;
 
     public function setUp() {
-        $this->mockRedis = $this->getMockBuilder('Predis\Client')->setMethods(["get", "set", "expireAt"])->getMock();
+        $this->mockRedis = $this->getMockBuilder('Predis\Client')->setMethods(array("get", "set", "expireAt"))->getMock();
         $this->underTest = new RedisAdapter($this->mockRedis);
     }
 

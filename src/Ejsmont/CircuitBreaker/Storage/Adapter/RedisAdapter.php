@@ -5,7 +5,6 @@ namespace Ejsmont\CircuitBreaker\Storage\Adapter;
 
 use Ejsmont\CircuitBreaker\Storage\StorageException;
 use Predis\Client;
-use Predis\Connection\ConnectionException;
 
 class RedisAdapter extends BaseAdapter {
 
