@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "guymers/php-dynamic-proxy" : "dev-master"
+        "guymers/php-dynamic-proxy" : "1.0.*"
     },
     "require-dev" : {
         "predis/predis" : "1.1.*",
