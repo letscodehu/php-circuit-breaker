@@ -45,7 +45,7 @@ class RedisAdapter extends BaseAdapter {
     {
         try {
             return unserialize($this->redis->get($key));
-        } catch (ConnectionException $e) {
+        } catch (\Exception $e) {
             throw new StorageException("Failed to get redis key: $key", 1, $e);
         }
     }
@@ -65,7 +65,7 @@ class RedisAdapter extends BaseAdapter {
         try {
             $this->redis->set($key, serialize($value));
             $this->redis->expireAt($key, $ttl);
-        } catch (ConnectionException $e) {
+        } catch (\Exception $e) {
             throw new StorageException("Failed to save redis key: $key", 1, $e);
         }
     }
