@@ -108,13 +108,32 @@ Frontend rendering the available payment options could look like this:
     }
 </pre>
 
+# Dynamic proxy
+
+In order to easily wrap a service class and protect it with circuit breaker there is a factory class:
+
+<pre>
+
+
+$client = new Predis\Client("tcp://127.0.0.1:6379?read_write_timeout=0");
+$factory = new Ejsmont\CircuitBreaker\Factory();
+$cb = $factory->getRedisInstance($client, 30, 3600);
+
+$proxy = CircuitBreakerProxyFactory::create('SomeSlowService', $circuitBreaker, ["constructor", "arguments"]);
+
+$proxy->remoteCalls(); // the call is protected by the circuit breaker
+
+</pre>
+
 # Features
 
 * Track multiple services through a single Circuit Breaker instance.
-* Pluggable backend adapters, provided APC and Memcached by default.
+* Pluggable backend adapters, provided APC, Redis and Memcached by default.
 * Customisable service thresholds. You can define how many failures are necessary for service to be considered down.
 * Customisable retry timeout. You do not want to disable the service forever. After provided timeout 
 circuit breaker will allow a single process to attempt 
+* Create a dynamic proxy wrapping around a service class with circuit breaker.
+
 
 # Performance Impact
 
@@ -124,8 +143,13 @@ APC implementation takes roughly 0.0002s to perform isAvailable() and then repor
 
 Memcache adapter is in range of 0.0005s when talking to the local memcached process. 
 
+Redis adapter is in range of 0.0002s when talking to the local Redis.
+
 The only potential performance impact is network connection time. If you chose to use remote memcached server or
 implement your own custom StorageAdapter.
+
+The proxy creation takes roughly 0.0007s. The further calls have no performance impact.
+
 
 # Running tests
 

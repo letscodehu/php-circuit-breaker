@@ -29,12 +29,12 @@ $factory = new Factory();
 $cb = $factory->getRedisInstance($client, 30, 3600);
 
 $start = microtime(true);
-$proxy = CircuitBreakerProxyFactory::create('Tests\Manual\Performance\SomeSlowService', $cb, ["lófasz és hab"]);
+$proxy = CircuitBreakerProxyFactory::create('Tests\Manual\Performance\SomeSlowService', $cb, ["test"]);
 $stop = microtime(true);
 
 echo sprintf("Total time for creating the proxy: %.4f\n", $stop - $start);
 
-$nonProxy = new SomeSlowService("lófasz és hab");
+$nonProxy = new SomeSlowService("test");
 
 $callCount = 10000;
 
