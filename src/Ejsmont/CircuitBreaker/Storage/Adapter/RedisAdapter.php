@@ -5,6 +5,7 @@ namespace Ejsmont\CircuitBreaker\Storage\Adapter;
 
 use Ejsmont\CircuitBreaker\Storage\StorageException;
 use Predis\Client;
+use Predis\Connection\ConnectionException;
 
 class RedisAdapter extends BaseAdapter {
 
@@ -44,8 +45,8 @@ class RedisAdapter extends BaseAdapter {
     {
         try {
             return unserialize($this->redis->get($key));
-        } catch (\Exception $e) {
-            throw new StorageException("Failed to save redis key: $key", 1, $e);
+        } catch (ConnectionException $e) {
+            throw new StorageException("Failed to get redis key: $key", 1, $e);
         }
     }
 
@@ -64,7 +65,7 @@ class RedisAdapter extends BaseAdapter {
         try {
             $this->redis->set($key, serialize($value));
             $this->redis->expireAt($key, $ttl);
-        } catch (\Exception $e) {
+        } catch (ConnectionException $e) {
             throw new StorageException("Failed to save redis key: $key", 1, $e);
         }
     }
